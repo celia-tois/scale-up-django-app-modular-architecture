@@ -1,5 +1,5 @@
 from django.urls import path
-from lettings.views import index, letting
+from .views import index, letting
 
 
 urlpatterns = [
