@@ -14,7 +14,9 @@ jobs:
       - run:
           name: Run tests
           command: pytest
-
+      - run:
+          name: Lint
+          command: flake8
 
 workflows:
   sample:
