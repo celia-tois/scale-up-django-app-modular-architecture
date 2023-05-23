@@ -1,0 +1,51 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@1.5.0
+  heroku: circleci/heroku@2.0.0
+
+jobs:
+  lint-and-test:
+    docker:
+      - image: cimg/python:3.10.2
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Run tests
+          command: pytest
+      - run:
+          name: Lint
+          command: flake8
+
+  build-and-push:
+    docker:
+      - image: docker:stable
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_TAG:$CIRCLE_SHA1 .
+      - run:
+          name: Publish Docker image
+          command: |
+            echo $DOCKERHUB_PASS | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            docker push $IMAGE_TAG:$CIRCLE_SHA1
+
+workflows:
+  sample:
+    jobs:
+      - lint-and-test
+      - build-and-push:
+          context:
+            - lettings
+          requires:
+            - lint-and-test
+      - heroku/deploy-via-git:
+          requires:
+            - build-and-push
+          filters:
+            branches:
+              only: main
