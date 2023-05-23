@@ -34,16 +34,6 @@ jobs:
             echo $DOCKERHUB_PASS | docker login --username $DOCKERHUB_USERNAME --password-stdin
             docker push $IMAGE_TAG:$CIRCLE_SHA1
 
-  deploy:
-    docker:
-      - image: $IMAGE_TAG:$CIRCLE_SHA1
-    steps:
-      - checkout
-      - run:
-          name: Deploy Main to Heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
-
 workflows:
   sample:
     jobs:
@@ -53,9 +43,7 @@ workflows:
             - lettings
           requires:
             - lint-and-test
-      - deploy:
-          context:
-            - lettings
+      - heroku/deploy-via-git:
           requires:
             - build-and-push
           filters:
