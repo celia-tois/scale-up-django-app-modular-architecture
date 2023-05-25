@@ -56,7 +56,7 @@ workflows:
             - lettings
           requires:
             - lint-and-test
-      - install:
+      - heroku/install:
           filters:
             branches:
               only: main
@@ -65,7 +65,7 @@ workflows:
             - lettings
           requires:
             - build-and-push
-            - install
+            - heroku/install
           filters:
             branches:
               only: main
