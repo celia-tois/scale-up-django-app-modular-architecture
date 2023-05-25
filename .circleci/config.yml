@@ -43,7 +43,6 @@ jobs:
       - run:
           name: Deploy Main to Heroku
           command: |
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku auth:login
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
             docker tag $CIRCLE_TAG registry.heroku.com/celiats-python-oc-lettings-13/web
             docker push registry.heroku.com/celiats-python-oc-lettings-13/web
