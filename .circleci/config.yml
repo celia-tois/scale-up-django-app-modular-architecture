@@ -39,6 +39,7 @@ jobs:
       - image: docker:stable
     steps:
       - checkout
+      - heroku/install
       - run:
           name: Deploy Main to Heroku
           command: |
@@ -56,16 +57,11 @@ workflows:
             - lettings
           requires:
             - lint-and-test
-      - heroku/install:
-          filters:
-            branches:
-              only: main
       - deploy-to-heroku:
           context:
             - lettings
           requires:
             - build-and-push
-            - heroku/install
           filters:
             branches:
               only: main
