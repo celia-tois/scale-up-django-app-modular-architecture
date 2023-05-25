@@ -36,7 +36,7 @@ jobs:
 
   deploy-to-heroku:
     docker:
-      - image: docker:stable
+      - image: cimg/python:3.10.2
     steps:
       - checkout
       - heroku/install
