@@ -44,9 +44,9 @@ jobs:
           name: Deploy Main to Heroku
           command: |
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-            docker tag $CIRCLE_TAG registry.heroku.com/celiats-python-oc-lettings-13/web
-            docker push registry.heroku.com/celiats-python-oc-lettings-13/web
-            heroku container:release web
+            # docker tag $CIRCLE_TAG registry.heroku.com/celiats-python-oc-lettings-13/web
+            # docker push registry.heroku.com/celiats-python-oc-lettings-13/web
+            # heroku container:release web
 
 workflows:
   sample:
