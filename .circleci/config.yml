@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.5.0
+  heroku: circleci/heroku@2.0
 
 jobs:
   lint-and-test:
@@ -41,7 +42,10 @@ jobs:
       - run:
           name: Deploy Main to Heroku
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+            heroku container:login
+            docker tag $CIRCLE_TAG registry.heroku.com/celiats-python-oc-lettings-13/web
+            docker push registry.heroku.com/celiats-python-oc-lettings-13/web
+            heroku container:release web
 
 workflows:
   sample:
@@ -52,11 +56,16 @@ workflows:
             - lettings
           requires:
             - lint-and-test
+      - install:
+          filters:
+            branches:
+              only: main
       - deploy-to-heroku:
           context:
             - lettings
           requires:
             - build-and-push
+            - install
           filters:
             branches:
               only: main
