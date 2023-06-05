@@ -75,3 +75,27 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+## Déploiement
+Le job de déploiement se produit dès lors qu'un changement est effectué sur la branche `main` et que les jobs précendents de la CI (`lint-and-test` et `build-and-push`) passent avec succès. Lors de ce job une image est envoyée à Heroku puis publiée.
+
+### Créer une application Heroku
+Afin de pouvoir déployer sur Heroku, il vous faut une application.
+- Connectez-vous à Heroku et aller à l'adresse https://dashboard.heroku.com/apps
+- Cliquez sur "New" puis sur "Create new app"
+- Complétez le champ "App name" avec "celiats-python-oc-lettings-13"
+- Sélectionnez "Europe" dans le sélecteur "Choose a region"
+- Cliquez sur "Create app"
+
+Pour que le déploiement fonctionne correctement, il faut que les variables d'environnement CircleCI soient correctement configurées.
+- Aller sur l'application web CircleCI
+- Dans le menu, cliquez sur "Organization Settings"
+- Dans le menu, cliquez sur "Contexts"
+- Cliquez sur "Create context" et donnez-lui comme nom "lettings"
+- Une fois dans votre context, créez les variables d'environnement suivantes :
+  - DATABASE_NAME
+  - HEROKU_API_KEY
+  - HEROKU_APP_NAME
+  - HEROKU_TOKEN
+  - SECRET_KEY
+  - SENTRY_IDS
