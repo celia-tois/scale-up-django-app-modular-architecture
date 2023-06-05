@@ -79,7 +79,6 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 ## Déploiement
 Le job de déploiement se produit dès lors qu'un changement est effectué sur la branche `main` et que les jobs précendents de la CI (`lint-and-test` et `build-and-push`) passent avec succès. Lors de ce job une image est envoyée à Heroku puis publiée.
 
-### Créer une application Heroku
 Afin de pouvoir déployer sur Heroku, il vous faut une application.
 - Connectez-vous à Heroku et aller à l'adresse https://dashboard.heroku.com/apps
 - Cliquez sur "New" puis sur "Create new app"
@@ -99,3 +98,14 @@ Pour que le déploiement fonctionne correctement, il faut que les variables d'en
   - HEROKU_TOKEN
   - SECRET_KEY
   - SENTRY_IDS
+
+## Sentry
+Afin de suivre les erreurs de notre projet, nous utilisons Sentry. Pour créer un nouveau projet Sentry, il faut :
+- Connectez-vous à Sentry et allez à l'adresse https://lettings.sentry.io/projects/
+- Dans le menu latéral, cliquez sur "Projects"
+- Cliquez sur "Create Project"
+- Dans la section "1. Choose your platform", sélectionnez "DJANGO"
+- Dans la section "2. Set your alert frequency", sélectionnez "Alert me on every new issue"
+- Dans la section "Name your project and assign it a team", "Project name", laissez le nom "python-django"
+- Cliquez sur "Create project"
+- Vous allez ensuite être redirigé vers la page "Configure Django SDK", suivez les instructions afin de terminez la configuration de Sentry.
