@@ -21,7 +21,7 @@ SECRET_KEY = env('SECRET_KEY', default=get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['celiats-python-oc-lettings-13.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['celiats-python-oc-lettings-13.herokuapp.com', 'localhost', '127.0.0.1:8000']
 
 
 # Application definition
